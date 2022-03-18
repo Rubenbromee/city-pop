@@ -1,0 +1,15 @@
+API: http://www.geonames.org/export/geonames-search.html
+
+Components: CityView, CountryView, PopulationCard, HomeButton, TextSearch
+
+TASK																STATUS
+Retrieve data using static query
+		Retrieve a number of cities/countries per search
+		Let the user choose from a limited number of search results
+ 		Handle query as state (Recoil)
+	Retrieve data using dynamic query
+	Load more search results on demand, limited results to begin with
+
+	Setup navigation
+	Setup error messages and loading icons
+	Styling
