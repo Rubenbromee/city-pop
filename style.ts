@@ -12,5 +12,10 @@ export default StyleSheet.create({
       margin: 12,
       borderWidth: 1,
       padding: 10,
+    },
+    searchContainer:{
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingTop: 100,
     }
 });
