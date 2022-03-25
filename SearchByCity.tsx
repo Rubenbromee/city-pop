@@ -1,8 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Button, FlatList, Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
+import { Button, FlatList, Pressable, SafeAreaView, Text, TextInput, View, Image } from "react-native";
 import styles from './style';
 import fetchData from "./fetchData";
+import style from './style';
 
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CitySearch'>
@@ -33,10 +34,12 @@ export default function SearchByCountry({navigation}:Props) {
             </View>
             <View style={styles.contentBlock}>
                 <TextInput style={styles.input} value={cityQuery} onChangeText={setCountryQuery} placeholder="Enter a city"/>
-                <Button title="Search" onPress={() => setFetchTrigger(true)}/>
-                <FlatList data={cityData} keyExtractor={item => item.id} renderItem={({item}) => 
+                <Pressable style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
+                    <Image style={styles.searchButton} source={{uri: "https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png"}}/>
+                </Pressable>
+                <FlatList style={styles.list} data={cityData} keyExtractor={item => item.id} renderItem={({item}) => 
                     <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', {cityName: item.name, cityPopulation: item.population})}>
-                        <Text>{item.name}</Text>
+                        <Text style={styles.listItemText}>{item.name}</Text>
                     </Pressable>
                 }/>
             </View>

@@ -19,10 +19,10 @@ type Props = NativeStackScreenProps<RootStackParamList, 'CountryCities'>
 export default function CitiesInCountry({route, navigation}:Props) {
     const [cityData, setCityData] = useState<Array<CityItem>>([]);
     let countryCode = route.params.countryCode;
+    let countryName = route.params.countryName;
 
     useEffect(() => {
         fetchCityData(countryCode).then((d) => {
-            console.log(d);
             let temp:CityItem[] = [];
             d.geonames.map((obj:CityObject, idx:number) => {
                 temp.push({name: obj.name, population: obj.population, key: idx, id: obj.name + idx});
@@ -34,7 +34,7 @@ export default function CitiesInCountry({route, navigation}:Props) {
     return (
         <View style={styles.container}>
             <View style={styles.headerBlock}>
-                <Text style={styles.header}>Country name</Text>
+                <Text style={styles.header}>{countryName}</Text>
             </View>
             <View style={styles.contentBlock}>
                 <FlatList style={styles.list} data={cityData} keyExtractor={item => item.id} renderItem={({item}) => 

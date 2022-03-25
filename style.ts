@@ -32,6 +32,8 @@ export default StyleSheet.create({
 	  marginTop: '5%',
 	  height: '60%',
 		alignSelf: 'stretch',
+		alignItems: 'center',
+		justifyContent: 'center'
     },
     header: {
       fontSize:50,
@@ -54,7 +56,6 @@ export default StyleSheet.create({
 		padding: 20,
 		flex: 2,
 		width: '100%',
-		justifyContent: 'center',
 		alignItems: 'center'
 	},
 	button: {
@@ -64,7 +65,8 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		margin: '3%',
 		borderColor:'black',
-		borderWidth: 3
+		borderWidth: 3,
+		width:'100%'
 	},
 	homebuttonText: {
 		fontSize: 30,
@@ -91,5 +93,22 @@ export default StyleSheet.create({
 	},
 	list: {
 		width:'100%'
+	},
+	populationCard: {
+		borderWidth: 3,
+		borderColor: 'black',
+		width: '100%',
+		height: '30%',
+	},
+	populationCardHeader: {
+		textAlign: 'center',
+		marginTop: '3%',
+		fontSize: 17,
+		fontWeight: 'bold'
+	},
+	populationCardNumber: {
+		textAlign: 'center',
+		marginTop: '5%',
+		fontSize: 35
 	}
 });

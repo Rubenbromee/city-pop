@@ -9,7 +9,9 @@ Navigation: Home screen -> Search by country | Search by city. Both generate sea
 Country search results -> List of cities in country -> Name of city and PopulationCard.
 City search results -> Name of city and PopulationCard.
 
+TODO:
+Infinite scrolling on query results
 Setup error messages and loading icons.
-Styling.
+Optimize queries
 
 Don't forget TYPING!

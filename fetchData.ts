@@ -1,4 +1,4 @@
-// Make into one function, pass type of search as parameter
+// Fetch used both in SearchByCountry and SearchByCity
 export default async function fetchData(userQuery:string, fetchType:string):Promise<CitySearchResult>{
     let apiCountryQuery:string = "http://api.geonames.org/searchJSON?q=" + userQuery + "&maxRows=3&featureClass=" + fetchType +"&username=weknowit";
     return (fetch(apiCountryQuery).then(response => {

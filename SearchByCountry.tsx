@@ -7,7 +7,7 @@ import fetchData from './fetchData';
 type Props = NativeStackScreenProps<RootStackParamList, 'CountrySearch'>
 
 export default function SearchByCountry({navigation}:Props) {
-    const [countryData, setCountryData] = useState<Array<CountryItem>>([]); // 
+    const [countryData, setCountryData] = useState<Array<CountryItem>>([]);
     const [countryQuery, setCountryQuery] = useState<string>("");
     const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
 
@@ -17,10 +17,9 @@ export default function SearchByCountry({navigation}:Props) {
             fetchData(countryQuery, "A").then((d) => { // A is the feature class for countries
                 // Format list items, some data used for navigation
                 d.geonames.map((obj:CountryObject, idx:number) => {
-                    temp.push({name: obj.name, id: obj.name + idx, key: idx, countryCode: obj.countryCode});
+                    temp.push({name: obj.countryName, id: obj.countryName + idx, key: idx, countryCode: obj.countryCode});
                 })
                 setCountryData(temp);
-
             })
             setFetchTrigger(false);
         }
@@ -37,7 +36,7 @@ export default function SearchByCountry({navigation}:Props) {
                     <Image style={styles.searchButton} source={{uri: "https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png"}}/>
                 </Pressable>
                 <FlatList style={styles.list} data={countryData} keyExtractor={item => item.id} renderItem={({item}) => 
-                    <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CountryCities',{countryCode: item.countryCode})}>
+                    <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CountryCities',{countryCode: item.countryCode, countryName: item.name})}>
                         <Text style={styles.listItemText}>{item.name}</Text>
                     </Pressable>
                 }/>
