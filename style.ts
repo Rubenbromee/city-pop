@@ -17,5 +17,10 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingTop: 100,
+    },
+    countryItem:{
+      backgroundColor: '#D3D3D3',
+      borderRadius: 3,
+      padding: 10
     }
 });

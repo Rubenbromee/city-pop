@@ -1,15 +1,15 @@
 API: http://www.geonames.org/export/geonames-search.html
 
-Components: CityView, CountryView, PopulationCard, HomeButton, TextSearch
+Retrieve a number of cities/countries per search.
+Let the user choose from a limited number of search results.
+Static at 10 results to begin with. Maybe a dynamic query with infinite scroll?
+Let user choose number of search results?
 
-TASK																STATUS
-Retrieve data using static query
-		Retrieve a number of cities/countries per search
-		Let the user choose from a limited number of search results
- 		Handle query as state (Recoil)
-	Retrieve data using dynamic query
-	Load more search results on demand, limited results to begin with
+Navigation: Home screen -> Search by country | Search by city. Both generate search results.
+Country search results -> List of cities in country -> Name of city and PopulationCard.
+City search results -> Name of city and PopulationCard.
 
-	Setup navigation
-	Setup error messages and loading icons
-	Styling
+Setup error messages and loading icons.
+Styling.
+
+Don't forget TYPING!
