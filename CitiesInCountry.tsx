@@ -31,15 +31,18 @@ export default function CitiesInCountry({route, navigation}:Props) {
         })
     }, []);
 
-
     return (
         <View style={styles.container}>
-            <Text>City</Text>
-            <FlatList data={cityData} keyExtractor={item => item.id} renderItem={({item}) => 
-                <Pressable style={styles.countryItem}>
-                    <Text>{item.name}</Text>
-                </Pressable>
-            }/>
+            <View style={styles.headerBlock}>
+                <Text style={styles.header}>Country name</Text>
+            </View>
+            <View style={styles.contentBlock}>
+                <FlatList style={styles.list} data={cityData} keyExtractor={item => item.id} renderItem={({item}) => 
+                    <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', {cityName: item.name, cityPopulation: item.population})}>
+                        <Text style={styles.listItemText}>{item.name}</Text>
+                    </Pressable>
+                }/>
+            </View>
         </View>
     );
 }

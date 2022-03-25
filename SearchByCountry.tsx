@@ -1,20 +1,8 @@
-import { View, TextInput, Button, Text, FlatList, SafeAreaView, Pressable } from "react-native";
-import { useEffect, useState } from 'react';
-import styles from './style';
-import CitiesInCountry from "./CitiesInCountry";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
-
-async function fetchCountryData(userQuery:string):Promise<CountrySearchResult> {
-    let apiCountryQuery:string = "http://api.geonames.org/searchJSON?q=" + userQuery + "&maxRows=1&featureClass=A&username=weknowit";
-
-    return (fetch(apiCountryQuery).then(response => {
-        if (!response.ok) {
-            throw new Error("No data for query");
-        }
-        return response.json()
-    }))
-}
+import { useEffect, useState } from 'react';
+import { Button, FlatList, Pressable, SafeAreaView, Text, TextInput, View, Image } from "react-native";
+import styles from './style';
+import fetchData from './fetchData';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CountrySearch'>
 
@@ -26,7 +14,7 @@ export default function SearchByCountry({navigation}:Props) {
     useEffect(() => {
         if (fetchTrigger) {
             let temp:CountryItem[] = []; // Since setting a state is asynchronus state is set to a temporary variable containing the new content
-            fetchCountryData(countryQuery).then((d) => {
+            fetchData(countryQuery, "A").then((d) => { // A is the feature class for countries
                 // Format list items, some data used for navigation
                 d.geonames.map((obj:CountryObject, idx:number) => {
                     temp.push({name: obj.name, id: obj.name + idx, key: idx, countryCode: obj.countryCode});
@@ -39,14 +27,21 @@ export default function SearchByCountry({navigation}:Props) {
     }, [fetchTrigger]);
 
     return (
-        <SafeAreaView style={styles.searchContainer}>
-            <TextInput style={styles.input} value={countryQuery} onChangeText={setCountryQuery} placeholder="Enter a country"/>
-            <Button title="Search" onPress={() => setFetchTrigger(true)}/>
-            <FlatList data={countryData} keyExtractor={item => item.id} renderItem={({item}) => 
-                <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CountryCities',{countryCode: item.countryCode})}>
-                    <Text>{item.name}</Text>
+        <View style={styles.container}>
+            <View style={styles.headerBlock}>
+                <Text style={styles.header}>Search by country</Text>
+            </View>
+            <View style={styles.contentBlock}>
+                <TextInput style={styles.input} value={countryQuery} onChangeText={setCountryQuery} placeholder="Enter a country"/>
+                <Pressable style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
+                    <Image style={styles.searchButton} source={{uri: "https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png"}}/>
                 </Pressable>
-            }/>
-        </SafeAreaView>
+                <FlatList style={styles.list} data={countryData} keyExtractor={item => item.id} renderItem={({item}) => 
+                    <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CountryCities',{countryCode: item.countryCode})}>
+                        <Text style={styles.listItemText}>{item.name}</Text>
+                    </Pressable>
+                }/>
+            </View>
+        </View>
     );
 }

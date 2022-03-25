@@ -8,10 +8,14 @@ export default StyleSheet.create({
       justifyContent: 'center',
     },
     input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
+		marginTop: '3%',
+		marginBottom: '3%',
+      	height: '15%',
+		borderColor: 'black',
+		borderWidth: 3, 
+		width: '100%',
+		textAlign: 'center',
+		fontSize: 20
     },
     searchContainer:{
 		alignItems: 'center',
@@ -20,7 +24,72 @@ export default StyleSheet.create({
     },
     countryItem:{
       backgroundColor: '#D3D3D3',
-      borderRadius: 3,
-      padding: 10
-    }
+	  borderWidth: 3,
+	  borderColor: 'black',
+      padding: '2%',
+	  textAlign: 'center',
+	  marginBottom: '5%',
+	  marginTop: '5%',
+	  height: '60%',
+		alignSelf: 'stretch',
+    },
+    header: {
+      fontSize:50,
+      fontWeight: 'bold',
+	  textAlign: 'center'
+    },
+    headerBlock: {
+      backgroundColor: '#fff',
+	  flex: 1,
+	  alignItems: 'center',
+	  justifyContent: 'center',
+	  width: '100%',
+	  paddingTop: '20%',
+	  paddingRight: '20%',
+	  paddingLeft: '20%',
+	  textAlign: 'center'
+    },
+	contentBlock: {
+		backgroundColor: '#fff',
+		padding: 20,
+		flex: 2,
+		width: '100%',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	button: {
+		height: '15%',
+		backgroundColor: 'white',
+		alignItems: 'center',
+		justifyContent: 'center',
+		margin: '3%',
+		borderColor:'black',
+		borderWidth: 3
+	},
+	homebuttonText: {
+		fontSize: 30,
+		fontWeight: 'bold'
+	},
+	searchButton: {
+		width: 40,
+		height: 40,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	searchButtonBorder: {
+		width: 65,
+		height: 65,
+		borderRadius: 65,
+		borderWidth: 3,
+		borderColor: 'black',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	listItemText: {
+		textAlign: 'center',
+		fontSize: 20
+	},
+	list: {
+		width:'100%'
+	}
 });

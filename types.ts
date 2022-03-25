@@ -62,5 +62,7 @@ type CityItem = {
 type RootStackParamList = {
     Home: undefined,
     CountrySearch: undefined,
-    CountryCities: {countryCode: string}
+    CountryCities: {countryCode: string},
+    CityInfo: {cityName: string, cityPopulation: number},
+    CitySearch: undefined
 }
