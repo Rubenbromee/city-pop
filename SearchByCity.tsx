@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Button, FlatList, Pressable, SafeAreaView, Text, TextInput, View, Image } from "react-native";
+import { Button, FlatList, Pressable, SafeAreaView, Text, TextInput, View, Image, ScrollView } from "react-native";
 import styles from './style';
 import fetchData from "./fetchData";
 import style from './style';
@@ -37,11 +37,17 @@ export default function SearchByCountry({navigation}:Props) {
                 <Pressable style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
                     <Image style={styles.searchButton} source={{uri: "https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png"}}/>
                 </Pressable>
-                <FlatList style={styles.list} data={cityData} keyExtractor={item => item.id} renderItem={({item}) => 
-                    <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', {cityName: item.name, cityPopulation: item.population})}>
-                        <Text style={styles.listItemText}>{item.name}</Text>
-                    </Pressable>
-                }/>
+                <ScrollView style={styles.scrollList}>
+                    {
+                        cityData.map((obj, idx) => {
+                            return (
+                                <Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo',{cityName: obj.name, cityPopulation: obj.population})}>
+                                    <Text style={styles.listItemText}>{obj.name}</Text>
+                                </Pressable>
+                            )
+                        })
+                    }
+                </ScrollView>
             </View>
         </View>
     );

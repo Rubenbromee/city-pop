@@ -23,14 +23,14 @@ export default StyleSheet.create({
 		paddingTop: 100,
     },
     countryItem:{
-      backgroundColor: '#D3D3D3',
+      backgroundColor: '#fff',
 	  borderWidth: 3,
 	  borderColor: 'black',
-      padding: '2%',
+      padding: 2,
 	  textAlign: 'center',
-	  marginBottom: '5%',
-	  marginTop: '5%',
-	  height: '60%',
+	  marginBottom: 5,
+	  marginTop: 15,
+	  height: 85,
 		alignSelf: 'stretch',
 		alignItems: 'center',
 		justifyContent: 'center'
@@ -89,7 +89,8 @@ export default StyleSheet.create({
 	},
 	listItemText: {
 		textAlign: 'center',
-		fontSize: 20
+		fontSize: 20,
+		fontWeight: 'bold'
 	},
 	list: {
 		width:'100%'
@@ -110,5 +111,10 @@ export default StyleSheet.create({
 		textAlign: 'center',
 		marginTop: '5%',
 		fontSize: 35
+	},
+	scrollList: {
+		overflow: 'scroll',
+		paddingBottom: 100,
+		width: '100%'
 	}
 });

@@ -1,10 +1,10 @@
-import { View, Text, FlatList, Pressable } from "react-native";
+import { View, Text, FlatList, Pressable, ScrollView } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from "react";
 import styles from './style';
 
 async function fetchCityData(countryCode:string) {
-    let apiCityQuery = "http://api.geonames.org/searchJSON?featureClass=P&country=" + countryCode + "&maxRows=1&&username=weknowit"
+    let apiCityQuery = "http://api.geonames.org/searchJSON?featureClass=P&country=" + countryCode + "&maxRows=5&&username=weknowit"
 
     return (fetch(apiCityQuery).then(response => {
         if (!response.ok) {
@@ -37,11 +37,17 @@ export default function CitiesInCountry({route, navigation}:Props) {
                 <Text style={styles.header}>{countryName}</Text>
             </View>
             <View style={styles.contentBlock}>
-                <FlatList style={styles.list} data={cityData} keyExtractor={item => item.id} renderItem={({item}) => 
-                    <Pressable style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', {cityName: item.name, cityPopulation: item.population})}>
-                        <Text style={styles.listItemText}>{item.name}</Text>
-                    </Pressable>
-                }/>
+                <ScrollView style={styles.scrollList}>
+                    {
+                        cityData.map((obj, idx) => {
+                            return (
+                                <Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo',{cityName: obj.name, cityPopulation: obj.population})}>
+                                    <Text style={styles.listItemText}>{obj.name}</Text>
+                                </Pressable>
+                            )
+                        })
+                    }
+                </ScrollView>
             </View>
         </View>
     );
