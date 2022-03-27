@@ -5,9 +5,9 @@ import styles from './style';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CityInfo'>
 
-export default function CityInfo({route, navigation}:Props) {
-    let cityName:string = route.params.cityName; 
-    let cityPopulation:number = route.params.cityPopulation;
+export default function CityInfo({ route }: Props) {
+    let cityName: string = route.params.cityName;
+    let cityPopulation: number = route.params.cityPopulation;
     return (
         <View style={styles.container}>
             <View style={styles.headerBlock}>

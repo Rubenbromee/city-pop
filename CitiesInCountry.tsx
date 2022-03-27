@@ -1,14 +1,14 @@
-import { View, Text, FlatList, Pressable, ScrollView } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from "react";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import styles from './style';
 
-async function fetchCityData(countryCode:string) {
-    let apiCityQuery = "http://api.geonames.org/searchJSON?featureClass=P&country=" + countryCode + "&maxRows=5&&username=weknowit"
+async function fetchCityData(countryCode: string, countryName: string) {
+    let apiCityQuery = 'http://api.geonames.org/searchJSON?featureClass=P&country=' + countryCode + '&countryName=' + countryName + '&maxRows=10&orderby=population&username=weknowit';
 
     return (fetch(apiCityQuery).then(response => {
         if (!response.ok) {
-            throw new Error("No data for query");
+            throw new Error('No data for query');
         }
         return response.json()
     }))
@@ -16,16 +16,16 @@ async function fetchCityData(countryCode:string) {
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CountryCities'>
 
-export default function CitiesInCountry({route, navigation}:Props) {
+export default function CitiesInCountry({ route, navigation }: Props) {
     const [cityData, setCityData] = useState<Array<CityItem>>([]);
     let countryCode = route.params.countryCode;
     let countryName = route.params.countryName;
 
     useEffect(() => {
-        fetchCityData(countryCode).then((d) => {
-            let temp:CityItem[] = [];
-            d.geonames.map((obj:CityObject, idx:number) => {
-                temp.push({name: obj.name, population: obj.population, key: idx, id: obj.name + idx});
+        fetchCityData(countryCode, countryName).then((d) => {
+            let temp: CityItem[] = [];
+            d.geonames.map((obj: CityObject, idx: number) => {
+                temp.push({ name: obj.name, population: obj.population, key: idx, id: obj.name + idx });
             });
             setCityData(temp);
         })
@@ -41,7 +41,7 @@ export default function CitiesInCountry({route, navigation}:Props) {
                     {
                         cityData.map((obj, idx) => {
                             return (
-                                <Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo',{cityName: obj.name, cityPopulation: obj.population})}>
+                                <Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', { cityName: obj.name, cityPopulation: obj.population })}>
                                     <Text style={styles.listItemText}>{obj.name}</Text>
                                 </Pressable>
                             )

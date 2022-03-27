@@ -1,5 +1,5 @@
 type CountrySearchResult = {
-    geonames:Array<CountryObject>;
+    geonames: Array<CountryObject>;
 };
 
 type CountryObject = {
@@ -7,8 +7,8 @@ type CountryObject = {
     adminName1: string,
     countryCode: string,
     countryId: string,
-    countryName:string,
-    fcl:string,
+    countryName: string,
+    fcl: string,
     fclName: string,
     fcode: string,
     fcodeName: string,
@@ -28,7 +28,7 @@ type CountryItem = {
 }
 
 type CitySearchResult = {
-    geonames:Array<CityObject>;
+    geonames: Array<CityObject>;
 }
 
 type CityObject = {
@@ -62,7 +62,7 @@ type CityItem = {
 type RootStackParamList = {
     Home: undefined,
     CountrySearch: undefined,
-    CountryCities: {countryCode: string, countryName: string},
-    CityInfo: {cityName: string, cityPopulation: number},
+    CountryCities: { countryCode: string, countryName: string },
+    CityInfo: { cityName: string, cityPopulation: number },
     CitySearch: undefined
 }

@@ -1,17 +1,6 @@
 API: http://www.geonames.org/export/geonames-search.html
 
-Retrieve a number of cities/countries per search.
-Let the user choose from a limited number of search results.
-Static at 10 results to begin with. Maybe a dynamic query with infinite scroll?
-Let user choose number of search results?
+Hello, this was a todo-list that I used during development to structure the process.
 
-Navigation: Home screen -> Search by country | Search by city. Both generate search results.
-Country search results -> List of cities in country -> Name of city and PopulationCard.
-City search results -> Name of city and PopulationCard.
-
-TODO:
-Infinite scrolling on query results
-Setup error messages and loading icons.
-Optimize queries
-
-Don't forget TYPING!
+Sort files in folders.
+More testing.

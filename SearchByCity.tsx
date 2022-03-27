@@ -1,28 +1,64 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { Button, FlatList, Pressable, SafeAreaView, Text, TextInput, View, Image, ScrollView } from "react-native";
+import { ActivityIndicator, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import styles from './style';
-import fetchData from "./fetchData";
-import style from './style';
-
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CitySearch'>
 
-export default function SearchByCountry({navigation}:Props) {
-    const [cityData, setCityData] = useState<Array<CityItem>>([]); // 
+export default function SearchByCountry({ navigation }: Props) {
+    const [cityData, setCityData] = useState<Array<CityItem>>([]);
     const [cityQuery, setCountryQuery] = useState<string>("");
     const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
 
     useEffect(() => {
         if (fetchTrigger) {
-            fetchData(cityQuery, "P").then((d) => { // P is the feature class for cities
-                let temp:CityItem[] = []; // Since setting a state is asynchronus state is set to a temporary variable containing the new content
-                d.geonames.map((obj:CityObject, idx:number) => { 
-                    temp.push({name: obj.name, population: obj.population, key: idx, id: obj.name + idx});
-                });
-                setCityData(temp);
+            setLoading(true);
 
+            // Fetch variables
+            let apiCountryQuery: string = 'http://api.geonames.org/searchJSON?q=' + cityQuery + '&maxRows=10&featureClass=P&username=weknowit';
+            let responseJSON: Promise<CitySearchResult>;
+            let temp: boolean = false;
+
+            responseJSON = fetch(apiCountryQuery).then(response => {
+                // Invalid fetch
+                if (!response.ok) {
+                    setLoading(false);
+                    throw ('No data for query');
+                }
+
+                // Valid fetch
+                setLoading(false);
+                temp = false;
+                setErrorTrigger(temp);
+                return response.json();
+
+                // Error handling
+            }).catch(function () {
+                temp = true;
+                setErrorTrigger(temp);
             })
+
+            // d.geonames should not be evaluated as undefined per the catch block above
+            if (!errorTrigger) {
+                let temp: CityItem[] = []; // Since setting a state is asynchronus state is set to a temporary variable containing the new content
+                responseJSON!.then((d) => { // P is the feature class for cities
+
+                    // Empty result check
+                    if (d.geonames.length === 0) {
+                        setErrorTrigger(true);
+                    }
+
+                    d.geonames.map((obj: CityObject, idx: number) => {
+                        temp.push({ name: obj.name, population: obj.population, key: idx, id: obj.name + idx });
+                    });
+                    setCityData(temp);
+                }).catch(function () {
+                    // Have already handled the promise rejection with the if statement on line 44. This is just to remove a warning.
+                })
+            }
+
             setFetchTrigger(false);
         }
     }, [fetchTrigger]);
@@ -33,21 +69,38 @@ export default function SearchByCountry({navigation}:Props) {
                 <Text style={styles.header}>Search by city</Text>
             </View>
             <View style={styles.contentBlock}>
-                <TextInput style={styles.input} value={cityQuery} onChangeText={setCountryQuery} placeholder="Enter a city"/>
+                <TextInput style={styles.input} value={cityQuery} onChangeText={setCountryQuery} placeholder='Enter a city' />
                 <Pressable style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
-                    <Image style={styles.searchButton} source={{uri: "https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png"}}/>
+                    <Image style={styles.searchButton} source={{ uri: 'https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png' }} />
                 </Pressable>
-                <ScrollView style={styles.scrollList}>
-                    {
-                        cityData.map((obj, idx) => {
-                            return (
-                                <Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo',{cityName: obj.name, cityPopulation: obj.population})}>
-                                    <Text style={styles.listItemText}>{obj.name}</Text>
-                                </Pressable>
+                {loading ?
+                    (
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size='large' color='#000000' />
+                        </View>
+                    ) :
+                    (
+                        errorTrigger ?
+                            (
+                                <View style={styles.errorContainer}>
+                                    <Text style={styles.errorText}>No results found for query!</Text>
+                                </View>
+                            ) :
+                            (
+                                <ScrollView style={styles.scrollList}>
+                                    {
+                                        cityData.map((obj, idx) => {
+                                            return (
+                                                <Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', { cityName: obj.name, cityPopulation: obj.population })}>
+                                                    <Text style={styles.listItemText}>{obj.name}</Text>
+                                                </Pressable>
+                                            )
+                                        })
+                                    }
+                                </ScrollView>
                             )
-                        })
-                    }
-                </ScrollView>
+                    )
+                }
             </View>
         </View>
     );

@@ -1,56 +1,56 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    input: {
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	input: {
 		marginTop: '3%',
 		marginBottom: '3%',
-      	height: '15%',
+		height: 80,
 		borderColor: 'black',
-		borderWidth: 3, 
+		borderWidth: 3,
 		width: '100%',
 		textAlign: 'center',
 		fontSize: 20
-    },
-    searchContainer:{
+	},
+	searchContainer: {
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingTop: 100,
-    },
-    countryItem:{
-      backgroundColor: '#fff',
-	  borderWidth: 3,
-	  borderColor: 'black',
-      padding: 2,
-	  textAlign: 'center',
-	  marginBottom: 5,
-	  marginTop: 15,
-	  height: 85,
+	},
+	countryItem: {
+		backgroundColor: '#fff',
+		borderWidth: 3,
+		borderColor: 'black',
+		padding: 2,
+		textAlign: 'center',
+		marginBottom: 5,
+		marginTop: 15,
+		height: 85,
 		alignSelf: 'stretch',
 		alignItems: 'center',
 		justifyContent: 'center'
-    },
-    header: {
-      fontSize:50,
-      fontWeight: 'bold',
-	  textAlign: 'center'
-    },
-    headerBlock: {
-      backgroundColor: '#fff',
-	  flex: 1,
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  width: '100%',
-	  paddingTop: '20%',
-	  paddingRight: '20%',
-	  paddingLeft: '20%',
-	  textAlign: 'center'
-    },
+	},
+	header: {
+		fontSize: 50,
+		fontWeight: 'bold',
+		textAlign: 'center'
+	},
+	headerBlock: {
+		backgroundColor: '#fff',
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: '100%',
+		paddingTop: '20%',
+		paddingRight: 20,
+		paddingLeft: 20,
+		textAlign: 'center'
+	},
 	contentBlock: {
 		backgroundColor: '#fff',
 		padding: 20,
@@ -64,9 +64,9 @@ export default StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		margin: '3%',
-		borderColor:'black',
+		borderColor: 'black',
 		borderWidth: 3,
-		width:'100%'
+		width: '100%'
 	},
 	homebuttonText: {
 		fontSize: 30,
@@ -93,7 +93,7 @@ export default StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	list: {
-		width:'100%'
+		width: '100%'
 	},
 	populationCard: {
 		borderWidth: 3,
@@ -116,5 +116,18 @@ export default StyleSheet.create({
 		overflow: 'scroll',
 		paddingBottom: 100,
 		width: '100%'
+	},
+	loadingContainer: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 100
+	},
+	errorContainer: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 100
+	},
+	errorText: {
+		fontSize: 20
 	}
 });
