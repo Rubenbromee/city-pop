@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import style from './style';
-import styles from './style';
+import style from '../style/style';
+import styles from '../style/style';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CityInfo'>
 

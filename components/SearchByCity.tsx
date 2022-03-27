@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
-import styles from './style';
+import styles from '../style/style';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CitySearch'>
 

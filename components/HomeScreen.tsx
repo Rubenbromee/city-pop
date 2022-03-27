@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, Text, View } from 'react-native';
-import styles from './style';
+import styles from '../style/style';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 

@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import styles from './style';
+import styles from '../style/style';
 
 async function fetchCityData(countryCode: string, countryName: string) {
     let apiCityQuery = 'http://api.geonames.org/searchJSON?featureClass=P&country=' + countryCode + '&countryName=' + countryName + '&maxRows=10&orderby=population&username=weknowit';

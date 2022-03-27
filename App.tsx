@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CitiesInCountry from './CitiesInCountry';
-import CityInfo from './CityInfo';
-import HomeScreen from './HomeScreen';
-import SearchByCity from './SearchByCity';
-import SearchByCountry from './SearchByCountry';
+import CitiesInCountry from './components/CitiesInCountry';
+import CityInfo from './components/CityInfo';
+import HomeScreen from './components/HomeScreen';
+import SearchByCity from './components/SearchByCity';
+import SearchByCountry from './components/SearchByCountry';
 
 // In paramaters for each navigation screen is given in types
 const Stack = createNativeStackNavigator<RootStackParamList>();
