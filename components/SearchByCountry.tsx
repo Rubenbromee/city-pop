@@ -6,102 +6,121 @@ import styles from '../style/style';
 type Props = NativeStackScreenProps<RootStackParamList, 'CountrySearch'>
 
 export default function SearchByCountry({ navigation }: Props) {
-    const [countryData, setCountryData] = useState<Array<CountryItem>>([]);
-    const [countryQuery, setCountryQuery] = useState<string>("");
-    const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
+	const [countryData, setCountryData] = useState<Array<CountryItem>>([]);
+	const [countryQuery, setCountryQuery] = useState<string>("");
+	const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [errorTrigger, setErrorTrigger] = useState<boolean>(false);
+	const [errorCountry, setErrorCountry] = useState<string>("");
 
-    useEffect(() => {
-        if (fetchTrigger) {
-            setLoading(true);
+	useEffect(() => {
+		if (fetchTrigger) {
+			setLoading(true);
 
-            // Fetch variables
-            let apiCountryQuery: string = 'http://api.geonames.org/searchJSON?q=' + countryQuery + '&maxRows=10&featureClass=A&username=weknowit';
-            let responseJSON: Promise<CountrySearchResult>;
-            let temp: boolean = false;
+			// Fetch variables
+			let apiCountryQuery: string = 'http://api.geonames.org/searchJSON?q=' + countryQuery + '&maxRows=10&featureClass=A&username=weknowit';
+			let responseJSON: Promise<CountrySearchResult>;
+			let temp: boolean = false;
 
-            responseJSON = fetch(apiCountryQuery).then(response => {
-                // Invalid fetch
-                if (!response.ok) {
-                    setLoading(false);
-                    throw ('No data for query');
-                }
+			responseJSON = fetch(apiCountryQuery).then(response => {
+				// Invalid fetch
+				if (!response.ok) {
+					setLoading(false);
+					throw ('No data for query');
+				}
 
-                // Valid fetch
-                setLoading(false);
-                temp = false;
-                setErrorTrigger(temp);
-                return response.json();
+				// Valid fetch
+				setLoading(false);
+				temp = false;
+				setErrorTrigger(temp);
+				return response.json();
 
-                // Error handling
-            }).catch(function () {
-                temp = true;
-                setErrorTrigger(temp);
-            });
+				// Error handling
+			}).catch(function () {
+				temp = true;
+				setErrorTrigger(temp);
+			});
 
-            // d.geonames should not be evaluated as undefined per the catch block above
-            if (!errorTrigger) {
-                let temp: CountryItem[] = []; // Since setting a state is asynchronus state is set to a temporary variable containing the new content
-                responseJSON!.then((d) => { // A is the feature class for countries
+			// d.geonames should not be evaluated as undefined per the catch block above
+			if (!temp) {
+				let tempArray: CountryItem[] = []; // Since setting a state is asynchronus state is set to a temporary variable containing the new content
+				responseJSON!.then((d) => { // A is the feature class for countries
 
-                    // Empty result check
-                    if (d.geonames.length === 0) {
-                        setErrorTrigger(true);
-                    }
+					// Empty result check
+					if (d.geonames.length === 0) {
+						temp = true;
+						setErrorTrigger(temp);
+					}
 
-                    d.geonames.map((obj: CountryObject, idx: number) => {
-                        temp.push({ name: obj.name, id: obj.countryName + idx, key: idx, countryCode: obj.countryCode });
-                    })
-                    setCountryData(temp);
-                }).catch(function () {
-                    // Have already handled the promise rejection with the if statement on line 44. This is just to remove a warning.
-                })
-            }
+					temp = true;
+					setErrorTrigger(temp);
 
-            setFetchTrigger(false);
-        }
-    }, [fetchTrigger]);
+					d.geonames.map((obj: CountryObject, idx: number) => {
+						// If exact match exists, don't throw error
+						if (obj.name === countryQuery) {
+							temp = false;
+							setErrorTrigger(temp);
+						}
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.headerBlock}>
-                <Text style={styles.header}>Search by country</Text>
-            </View>
-            <View style={styles.contentBlock}>
-                <TextInput style={styles.input} value={countryQuery} onChangeText={setCountryQuery} placeholder='Enter a country' />
-                <Pressable style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
-                    <Image style={styles.searchButton} source={{ uri: 'https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png' }} />
-                </Pressable>
-                {loading ?
-                    (
-                        <View style={styles.loadingContainer}>
-                            <ActivityIndicator size='large' color='#000000' />
-                        </View>
-                    ) :
-                    (
-                        errorTrigger ?
-                            (
-                                <View style={styles.errorContainer}>
-                                    <Text style={styles.errorText}>No results found for query!</Text>
-                                </View>
-                            ) :
-                            (
-                                <ScrollView style={styles.scrollList}>
-                                    {
-                                        countryData.map((obj, idx) => {
-                                            return (
-                                                <Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CountryCities', { countryCode: obj.countryCode, countryName: obj.name })}>
-                                                    <Text style={styles.listItemText}>{obj.name}</Text>
-                                                </Pressable>
-                                            )
-                                        })
-                                    }
-                                </ScrollView>
-                            )
-                    )
-                }
-            </View>
-        </View>
-    );
+						tempArray.push({ name: obj.name, id: obj.countryName + idx, key: idx, countryCode: obj.countryCode });
+					})
+
+					// To prevent list from trying to load on faulty query
+					if (temp) {
+						tempArray = [];
+					}
+
+					setCountryData(tempArray);
+				}).catch(function () {
+					// Have already handled the promise rejection with the if statement on line 44. This is just to remove a warning.
+				})
+			}
+
+			setErrorTrigger(temp);
+			setErrorCountry(countryQuery);
+			setFetchTrigger(false);
+		}
+	}, [fetchTrigger]);
+
+	return (
+		<View style={styles.container}>
+			<View style={styles.headerBlock}>
+				<Text style={styles.header}>Search by country</Text>
+			</View>
+			<View style={styles.contentBlock}>
+				<TextInput style={styles.input} value={countryQuery} onChangeText={setCountryQuery} placeholder='Enter a country' />
+				<Pressable style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
+					<Image style={styles.searchButton} source={{ uri: 'https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png' }} />
+				</Pressable>
+				{loading ?
+					(
+						<View style={styles.loadingContainer}>
+							<ActivityIndicator size='large' color='#000000' />
+						</View>
+					) :
+					(
+						errorTrigger ?
+							(
+								<View style={styles.errorContainer}>
+									<Text style={styles.errorText}>Sorry! No countries found with name "{errorCountry}".</Text>
+								</View>
+							) :
+							(
+								<ScrollView style={styles.scrollList}>
+									{
+										countryData.map((obj, idx) => {
+											return (
+												<Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CountryCities', { countryCode: obj.countryCode, countryName: obj.name })}>
+													<Text style={styles.listItemText}>{obj.name}</Text>
+												</Pressable>
+											)
+										})
+									}
+								</ScrollView>
+							)
+					)
+				}
+			</View>
+		</View>
+	);
 }
