@@ -72,7 +72,7 @@ const SearchByCountry: React.FC<Props> = ({ navigation }: Props) => {
 
 					setCountryData(tempArray);
 				}).catch(() => {
-					// Have already handled the promise rejection with the if statement on line 44. This is just to remove a warning.
+					// Have already handled the promise rejection with the if statement on line 45. This is just to remove a warning.
 				})
 			}
 
