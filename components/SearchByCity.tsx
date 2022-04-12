@@ -1,13 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Image, ScrollView, Text, TextInput, TouchableHighlight, View } from 'react-native';
 import styles from '../style/style';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CitySearch'>
 
-// Create two css styles for buttons render depending on pressed state
-
-export default function SearchByCountry({ navigation }: Props) {
+const SearchByCity: React.FC<Props> = ({ navigation }) => {
 	const [cityData, setCityData] = useState<Array<CityItem>>([]);
 	const [cityQuery, setCountryQuery] = useState<string>("");
 	const [fetchTrigger, setFetchTrigger] = useState<boolean>(false);
@@ -38,7 +36,7 @@ export default function SearchByCountry({ navigation }: Props) {
 				return response.json();
 
 				// Error handling
-			}).catch(function () {
+			}).catch(() => {
 				temp = true;
 				setErrorTrigger(temp);
 			})
@@ -74,7 +72,7 @@ export default function SearchByCountry({ navigation }: Props) {
 
 					setCityData(tempArray);
 
-				}).catch(function () {
+				}).catch(() => {
 					// Have already handled the promise rejection with the if statement on line 44. This is just to remove a warning.
 				})
 			}
@@ -92,9 +90,9 @@ export default function SearchByCountry({ navigation }: Props) {
 			</View>
 			<View style={styles.contentBlock}>
 				<TextInput style={styles.input} value={cityQuery} onChangeText={setCountryQuery} placeholder='Enter a city' />
-				<Pressable style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
+				<TouchableHighlight activeOpacity={0.6} underlayColor="#909090" style={styles.searchButtonBorder} onPress={() => setFetchTrigger(true)}>
 					<Image style={styles.searchButton} source={{ uri: 'https://iconvulture.com/wp-content/uploads/2017/12/magnifying-glass.png' }} />
-				</Pressable>
+				</TouchableHighlight>
 				{loading ?
 					(
 						<View style={styles.loadingContainer}>
@@ -113,9 +111,9 @@ export default function SearchByCountry({ navigation }: Props) {
 									{
 										cityData.map((obj, idx) => {
 											return (
-												<Pressable key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', { cityName: obj.name, cityPopulation: obj.population })}>
+												<TouchableHighlight activeOpacity={0.6} underlayColor="#909090" key={idx} style={styles.countryItem} onPress={() => navigation.navigate('CityInfo', { cityName: obj.name, cityPopulation: obj.population })}>
 													<Text style={styles.listItemText}>{obj.name}</Text>
-												</Pressable>
+												</TouchableHighlight>
 											)
 										})
 									}
@@ -127,3 +125,5 @@ export default function SearchByCountry({ navigation }: Props) {
 		</View>
 	);
 }
+
+export default SearchByCity;
